@@ -1,20 +1,9 @@
-#include "Window.h"
+#include "Terminal.h"
 
 int main() {
 
-	Window window;
-
-	while (!window.ShouldClose()) {
-
-		window.Update();
-
-		window.StartDrawing();
-
-		window.Clear({12, 12, 12, 255});
-		
-		window.FinishDrawing();
-
-	}
+	Terminal terminal;
+	terminal.Init();
 
 	return 0;
 }
