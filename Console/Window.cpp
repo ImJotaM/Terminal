@@ -9,25 +9,37 @@ Window::Window() {
 
 	window.title = "Terminal";
 	SetWindowTitle(window.title);
+	
+	window.scale = GetWindowScaleDPI();
 
 	window.width = screen.width / 2;
 	window.height = screen.height / 2;
+
+	window.width = static_cast<int>(window.width * window.scale.x);
+	window.height = static_cast<int>(window.height * window.scale.y);
+
 	SetWindowSize(window.width, window.height);
 
 	window.position.x = (screen.width - window.width) / 2;
 	window.position.y = (screen.height - window.height) / 2;
+
 	SetWindowPosition(window.position.x, window.position.y);
 
 	window.flags = FLAG_WINDOW_UNDECORATED;
 	SetWindowState(window.flags);
 
+	window.max_FPS = 60;
 	SetTargetFPS(window.max_FPS);
 
 	window.border.size = 10;
+	window.border.at_right = false;
+	window.border.at_bottom = false;
 
-	window.titlebar.rect.width = window.width;
 	window.titlebar.rect.height = 28;
+	window.titlebar.rect.height = static_cast<int>(window.titlebar.rect.height * window.scale.y);
+
 	window.titlebar.color = { 32, 32, 32, 255 };
+
 }
 
 Window::~Window() {
@@ -69,6 +81,10 @@ void Window::FinishDrawing() {
 
 void Window::Clear(Color color) {
 	ClearBackground(color);
+}
+
+int Window::GetTitlebarHeight() {
+	return window.titlebar.rect.height;;
 }
 
 void Window::CheckWindowDragging() {
@@ -133,6 +149,15 @@ void Window::DrawNavbar() {
 
 	titlebar->rect.width = window.width;
 	DrawRectangleRec(titlebar->rect, titlebar->color);
+
+	/////////////////////////////////////////////////////////////////
+	//                                                             //
+	// TO DO:                                                      //
+	//                                                             //
+	// Remove 'area' element of window.titlebar.closebtn.area and  //
+	// calc rect and other values directly.                        //
+	//                                                             //
+	/////////////////////////////////////////////////////////////////
 
 	Titlebar::Closebtn* closebtn = &window.titlebar.closebtn;
 	

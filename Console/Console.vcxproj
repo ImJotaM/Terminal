@@ -88,6 +88,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Brush.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Terminal.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -96,7 +97,11 @@
     <Image Include="assets\icons\arrow-down.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brush.h" />
+    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="GlobalLibs.h" />
     <ClInclude Include="Terminal.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
