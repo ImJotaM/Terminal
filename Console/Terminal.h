@@ -2,6 +2,8 @@
 #include "Window.h"
 #include "Brush.h"
 
+#include "CommandHandler.h"
+
 namespace fs = std::filesystem;
 
 class Terminal {
@@ -16,6 +18,16 @@ private:
 
 	Window window;
 	Brush brush;
+	CommandHandler commandHandler;
+
+	Color bgcolor = { 12, 12, 12, 255 };
+
+	struct TerminalCursor {
+
+		Rectangle_i rect = { 0, 0, 0, 0 };
+
+		Color color = WHITE;
+	} cursor;
 
 	struct TextFormat {
 
@@ -34,6 +46,8 @@ private:
 	std::vector<Text> history = {};
 
 	fs::path currentPath = "";
+
+	void RegisterCommands();
 
 	void Loop();
 

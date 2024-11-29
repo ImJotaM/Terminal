@@ -89,6 +89,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Brush.cpp" />
+    <ClCompile Include="CommandHandler.cpp" />
+    <ClCompile Include="Commands.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Terminal.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -98,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brush.h" />
+    <ClInclude Include="CommandHandler.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="GlobalLibs.h" />
     <ClInclude Include="Terminal.h" />

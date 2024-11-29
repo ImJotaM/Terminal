@@ -33,7 +33,7 @@ void Terminal::Loop() {
 
 		window.StartDrawing();
 
-		window.Clear({ 12, 12, 12, 255 });
+		window.Clear(bgcolor);
 
 		DrawHistory();
 		DrawUserInput();
@@ -69,6 +69,16 @@ void Terminal::HandleInput() {
 	history.emplace_back(currentPath.string() + "> " + userInput + '\n');
 
 	std::vector<std::string> tokens = GetInputTokens();
+
+	commandHandler.HandleTokens(this, tokens);
+
+	//////////////////////////////////////////////////////////////////
+	//                                                              //
+	//  TO DO:                                                      //
+	//                                                              //
+	//  Change the function detection system                        //
+	//                                                              //
+	//////////////////////////////////////////////////////////////////
 
 	for (int i = 0; i < tokens.size(); i++) {
 
@@ -160,5 +170,13 @@ void Terminal::DrawUserInput() {
 	out.color = WHITE;
 
 	brush.DrawText(out, textformat.font);
+
+	Vector2_i textSize = MeasureTextEx(textformat.font, out.text.c_str(), static_cast<float>(out.fontsize), static_cast<float>(out.spacing));
+	cursor.rect.x = 12 + textSize.x + 1;
+	cursor.rect.y = out.position.y + textSize.y - 4;
+	cursor.rect.width = textformat.fontsize / 2;
+	cursor.rect.height = 4;
+
+	DrawRectangleRec(cursor.rect, cursor.color);
 
 }

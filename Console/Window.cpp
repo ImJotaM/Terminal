@@ -150,14 +150,14 @@ void Window::DrawNavbar() {
 	titlebar->rect.width = window.width;
 	DrawRectangleRec(titlebar->rect, titlebar->color);
 
-	/////////////////////////////////////////////////////////////////
-	//                                                             //
-	// TO DO:                                                      //
-	//                                                             //
-	// Remove 'area' element of window.titlebar.closebtn.area and  //
-	// calc rect and other values directly.                        //
-	//                                                             //
-	/////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//                                                              //
+	//  TO DO:                                                      //
+	//                                                              //
+	//  Remove 'area' element of window.titlebar.closebtn.area and  //
+	//  calc rect and other values directly.                        //
+	//                                                              //
+	//////////////////////////////////////////////////////////////////
 
 	Titlebar::Closebtn* closebtn = &window.titlebar.closebtn;
 	
