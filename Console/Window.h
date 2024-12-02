@@ -45,11 +45,19 @@ private:
 		Rectangle_i rect = { 0, 0, 0, 0 };
 		Color color = { 0x0, 0x0, 0x0, 0xff };
 
+		struct Title {
+
+			int fontsize = 0;
+			const char* text = "";
+
+			Font font = { };
+
+		} title;
+
 		struct Closebtn {
 
 			int size = 0;
 			Vector2_i padding = { 0, 0 };
-			Rectangle_i area = { 0, 0, 0, 0 };
 			Rectangle_i rect = { 0, 0, 0, 0 };
 			Line lines[2] = { {}, {} };
 

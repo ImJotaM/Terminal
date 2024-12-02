@@ -1,8 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "Brush.h"
-
-#include "CommandHandler.h"
+#include "TerminalCommands.h"
 
 namespace fs = std::filesystem;
 
@@ -18,7 +17,6 @@ private:
 
 	Window window;
 	Brush brush;
-	CommandHandler commandHandler;
 
 	Color bgcolor = { 12, 12, 12, 255 };
 
@@ -47,7 +45,8 @@ private:
 
 	fs::path currentPath = "";
 
-	void RegisterCommands();
+	friend struct TerminalCommands;
+	TerminalCommands commands;
 
 	void Loop();
 

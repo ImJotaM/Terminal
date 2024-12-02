@@ -154,30 +154,28 @@ void Window::DrawNavbar() {
 	//                                                              //
 	//  TO DO:                                                      //
 	//                                                              //
-	//  Remove 'area' element of window.titlebar.closebtn.area and  //
-	//  calc rect and other values directly.                        //
+	//  Calc the padding and the size dynamically for other types   //
+	//  of scale and sizes.                                         //
 	//                                                              //
 	//////////////////////////////////////////////////////////////////
 
 	Titlebar::Closebtn* closebtn = &window.titlebar.closebtn;
 	
-	closebtn->area = { window.width - closebtn->size - closebtn->padding.x , closebtn->padding.y , closebtn->size, closebtn->size };
-
+	closebtn->padding = { 12, 12 };
 	closebtn->size = 10;
-	closebtn->padding = { 12, 8 };
 	closebtn->rect = { 
-		closebtn->area.x - closebtn->padding.x, 0,
+		window.width - closebtn->size - closebtn->padding.x - closebtn->padding.x, 0,
 		window.width, titlebar->rect.height
 	};
 
 	closebtn->lines[0] = { 
-		{ closebtn->area.x, closebtn->area.y },
-		{ closebtn->area.x + closebtn->area.width, closebtn->area.y + closebtn->area.height }
+		{ window.width - closebtn->size - closebtn->padding.x, closebtn->padding.y },
+		{ window.width - closebtn->size - closebtn->padding.x + closebtn->size, closebtn->padding.y + closebtn->size }
 	};
 
 	closebtn->lines[1] = {
-		{ closebtn->area.x, closebtn->area.y + closebtn->area.height },
-		{ closebtn->area.x + closebtn->area.width, closebtn->area.y }
+		{ window.width - closebtn->size - closebtn->padding.x, closebtn->padding.y + closebtn->size },
+		{ window.width - closebtn->size - closebtn->padding.x + closebtn->size, closebtn->padding.y }
 	};
 
 	if (CheckCollisionPointRec(mouse_pos, closebtn->rect)) {

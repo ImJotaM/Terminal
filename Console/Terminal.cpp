@@ -1,6 +1,6 @@
 #include "Terminal.h"
 
-Terminal::Terminal() {
+Terminal::Terminal() : commands(this) {
 
 	textformat.scale = window.GetWindowScale().x;
 
@@ -59,6 +59,7 @@ void Terminal::GetUserInput() {
 	}
 
 	if (IsKeyPressed(KEY_ENTER)) {
+		history.emplace_back(currentPath.string() + "> " + userInput + '\n');
 		HandleInput();
 	}
 
@@ -66,11 +67,20 @@ void Terminal::GetUserInput() {
 
 void Terminal::HandleInput() {
 
-	history.emplace_back(currentPath.string() + "> " + userInput + '\n');
-
 	std::vector<std::string> tokens = GetInputTokens();
 
-	commandHandler.HandleTokens(this, tokens);
+	if (!tokens.empty()) {
+
+		auto command = commands.commandlist.find(tokens[0]);
+
+		if (command != commands.commandlist.end()) {
+			(commands.*(command->second))(tokens);
+		} else {
+			history.emplace_back("Command not found");
+			history.emplace_back("\n");
+		}
+
+	}
 
 	//////////////////////////////////////////////////////////////////
 	//                                                              //
@@ -128,18 +138,25 @@ std::vector<std::string> Terminal::GetInputTokens() {
 
 	std::vector<std::string> tokens = {};
 
-	std::string buf = "";
+	//std::string buf = "";
 
-	for (size_t i = 0; i < userInput.length(); i++) {
-		if (userInput[i] != ' ') {
-			buf += userInput[i];
-			if (i + 1 == userInput.length()) {
-				tokens.push_back(buf);
-			}
-		} else {
-			tokens.push_back(buf);
-			buf.clear();
-		}
+	//for (size_t i = 0; i < userInput.length(); i++) {
+	//	if (userInput[i] != ' ') {
+	//		buf += userInput[i];
+	//		if (i + 1 == userInput.length()) {
+	//			tokens.push_back(buf);
+	//		}
+	//	} else {
+	//		tokens.push_back(buf);
+	//		buf.clear();
+	//	}
+	//}
+
+	std::stringstream ss(userInput);
+	std::string token;
+
+	while (ss >> token) {
+		tokens.push_back(token);
 	}
 
 	return tokens;
