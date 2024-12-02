@@ -54,5 +54,10 @@ struct Text {
 	int spacing = 0;
 
 	Color color = { 0xff, 0xff, 0xff, 0xff };
+
+	Text() = default;
+	Text(std::string text) : text(text) {}
+	Text(std::string text, Color color) : text(text), color(color) {}
+
 };
 

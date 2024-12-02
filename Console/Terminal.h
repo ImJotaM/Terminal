@@ -13,6 +13,11 @@ public:
 
 	void Init();
 
+	template<typename... Args>
+	void Print(const std::string& text, Args... args);
+	template<typename... Args>
+	void Print(Color color, const std::string& text, Args... args);
+
 private:
 
 	Window window;
@@ -23,8 +28,8 @@ private:
 	struct TerminalCursor {
 
 		Rectangle_i rect = { 0, 0, 0, 0 };
-
 		Color color = WHITE;
+
 	} cursor;
 
 	struct TextFormat {
@@ -59,3 +64,26 @@ private:
 	void DrawUserInput();
 
 };
+
+template<typename ...Args>
+inline void Terminal::Print(const std::string& text, Args ...args) {
+	
+	std::ostringstream stream;
+
+	stream << text;
+	((stream << args), ...);
+
+	history.emplace_back(stream.str());
+
+}
+
+template<typename ...Args>
+inline void Terminal::Print(Color color, const std::string& text, Args ...args) {
+	
+	std::ostringstream stream;
+	
+	stream << text;
+	((stream << args), ...);
+
+	history.emplace_back(stream.str(), color);
+}

@@ -47,10 +47,13 @@ private:
 
 		struct Title {
 
-			int fontsize = 0;
 			const char* text = "";
+			int fontsize = 0;
+			int spacing = 0;
+			Vector2 measuredtext = { 0, 0 };
 
 			Font font = { };
+			Color color = { 0xff, 0xff, 0xff, 0xff };
 
 		} title;
 

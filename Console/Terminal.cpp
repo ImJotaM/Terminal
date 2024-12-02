@@ -82,54 +82,6 @@ void Terminal::HandleInput() {
 
 	}
 
-	//////////////////////////////////////////////////////////////////
-	//                                                              //
-	//  TO DO:                                                      //
-	//                                                              //
-	//  Change the function detection system                        //
-	//                                                              //
-	//////////////////////////////////////////////////////////////////
-
-	for (int i = 0; i < tokens.size(); i++) {
-
-		if (tokens[i] == "cd") {
-
-			if (i + 1 != tokens.size()) {
-
-				std::string newDir = tokens[i + 1];
-
-				if (fs::exists(currentPath / newDir)) {
-					currentPath = currentPath / newDir;
-				} else {
-					history.emplace_back("Path not founded.");
-					history.emplace_back("\n");
-				}
-
-			} else {
-				history.emplace_back("Insert a path after \'cd\'");
-				history.emplace_back("\n");
-			}
-
-		} else if (tokens[i] == "ls") {
-
-			for (const auto& entry : fs::directory_iterator(currentPath)) {
-				history.emplace_back(entry.path().filename().string() + '\n');
-			}
-
-			history.emplace_back("\n");
-
-		} else if (tokens[i] == "cls") {
-			
-			history.clear();
-		
-		} else {
-
-			history.emplace_back("\'" + tokens[i] + "\' command not founded.");
-
-		}
-
-	}
-
 	userInput.clear();
 
 }
@@ -137,20 +89,6 @@ void Terminal::HandleInput() {
 std::vector<std::string> Terminal::GetInputTokens() {
 
 	std::vector<std::string> tokens = {};
-
-	//std::string buf = "";
-
-	//for (size_t i = 0; i < userInput.length(); i++) {
-	//	if (userInput[i] != ' ') {
-	//		buf += userInput[i];
-	//		if (i + 1 == userInput.length()) {
-	//			tokens.push_back(buf);
-	//		}
-	//	} else {
-	//		tokens.push_back(buf);
-	//		buf.clear();
-	//	}
-	//}
 
 	std::stringstream ss(userInput);
 	std::string token;
@@ -169,7 +107,6 @@ void Terminal::DrawHistory() {
 		history[i].position = { 12, textformat.titlebar_offset + textformat.fontsize * i };
 		history[i].fontsize = textformat.fontsize;
 		history[i].spacing = textformat.spacing;
-		history[i].color = WHITE;
 
 		brush.DrawText(history[i], textformat.font);
 	}

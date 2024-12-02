@@ -40,6 +40,18 @@ Window::Window() {
 
 	window.titlebar.color = { 32, 32, 32, 255 };
 
+	window.titlebar.title.text = window.title;
+	window.titlebar.title.fontsize = 16;
+	window.titlebar.title.spacing = 1;
+	window.titlebar.title.color = WHITE;
+	window.titlebar.title.font = LoadFontEx("resources/fonts/SegoeUIVF.ttf", window.titlebar.title.fontsize, nullptr, 0);
+	GenTextureMipmaps(&window.titlebar.title.font.texture);
+	SetTextureFilter(window.titlebar.title.font.texture, TEXTURE_FILTER_TRILINEAR);
+	window.titlebar.title.measuredtext = MeasureTextEx(
+		window.titlebar.title.font, window.titlebar.title.text,
+		static_cast<float>(window.titlebar.title.fontsize), static_cast<float>(window.titlebar.title.spacing)
+	);
+
 }
 
 Window::~Window() {
@@ -150,6 +162,13 @@ void Window::DrawNavbar() {
 	titlebar->rect.width = window.width;
 	DrawRectangleRec(titlebar->rect, titlebar->color);
 
+	Titlebar::Title* title = &window.titlebar.title;
+
+	DrawTextEx(
+		title->font, title->text, { 10.f , (titlebar->rect.height - title->measuredtext.y) / 2 },
+		static_cast<float>(title->fontsize), static_cast<float>(title->spacing), title->color
+	);
+
 	//////////////////////////////////////////////////////////////////
 	//                                                              //
 	//  TO DO:                                                      //
@@ -161,8 +180,8 @@ void Window::DrawNavbar() {
 
 	Titlebar::Closebtn* closebtn = &window.titlebar.closebtn;
 	
-	closebtn->padding = { 12, 12 };
 	closebtn->size = 10;
+	closebtn->padding = { 12 , (titlebar->rect.height - closebtn->size) / 2 };
 	closebtn->rect = { 
 		window.width - closebtn->size - closebtn->padding.x - closebtn->padding.x, 0,
 		window.width, titlebar->rect.height
