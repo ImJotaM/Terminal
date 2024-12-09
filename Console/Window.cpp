@@ -26,7 +26,7 @@ Window::Window() {
 	SetWindowPosition(window.position.x, window.position.y);
 
 	window.flags = FLAG_WINDOW_UNDECORATED;
-	SetWindowState(window.flags);
+	SetWindowState(FLAG_MSAA_4X_HINT | FLAG_WINDOW_UNDECORATED);
 
 	window.max_FPS = 60;
 	SetTargetFPS(window.max_FPS);
@@ -41,12 +41,12 @@ Window::Window() {
 	window.titlebar.color = { 32, 32, 32, 255 };
 
 	window.titlebar.title.text = window.title;
-	window.titlebar.title.fontsize = 16;
+	window.titlebar.title.fontsize = 20;
 	window.titlebar.title.spacing = 1;
 	window.titlebar.title.color = WHITE;
-	window.titlebar.title.font = LoadFontEx("resources/fonts/SegoeUIVF.ttf", window.titlebar.title.fontsize, nullptr, 0);
-	GenTextureMipmaps(&window.titlebar.title.font.texture);
-	SetTextureFilter(window.titlebar.title.font.texture, TEXTURE_FILTER_TRILINEAR);
+	window.titlebar.title.font = LoadFontEx("resources/fonts/Roboto/Roboto-Regular.ttf", 20, nullptr, 0);
+	SetTextureFilter(window.titlebar.title.font.texture, TEXTURE_FILTER_BILINEAR);
+
 	window.titlebar.title.measuredtext = MeasureTextEx(
 		window.titlebar.title.font, window.titlebar.title.text,
 		static_cast<float>(window.titlebar.title.fontsize), static_cast<float>(window.titlebar.title.spacing)
@@ -166,7 +166,7 @@ void Window::DrawNavbar() {
 
 	DrawTextEx(
 		title->font, title->text, { 10.f , (titlebar->rect.height - title->measuredtext.y) / 2 },
-		static_cast<float>(title->fontsize), static_cast<float>(title->spacing), title->color
+		static_cast<float>(title->fontsize), 1, title->color
 	);
 
 	//////////////////////////////////////////////////////////////////

@@ -52,7 +52,8 @@ private:
 			int spacing = 0;
 			Vector2 measuredtext = { 0, 0 };
 
-			Font font = { };
+			Font font = { 0 };
+
 			Color color = { 0xff, 0xff, 0xff, 0xff };
 
 		} title;
